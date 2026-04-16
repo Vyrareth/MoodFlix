@@ -1,4 +1,4 @@
-# 🎬 MoodFlix
+# MoodFlix
 
 A full-stack movie recommendation web app that suggests films based on your current mood. Built with Java Spring Boot on the backend and vanilla HTML/CSS/JavaScript on the frontend, powered by the [TMDb API](https://www.themoviedb.org/).
 
