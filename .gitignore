@@ -1,0 +1,18 @@
+# ── Maven build output ────────────────────────────────────────────────────────
+target/
+*.class
+
+# ── API keys — never commit the real application.properties ──────────────────
+src/main/resources/application.properties
+
+# ── IDE files ─────────────────────────────────────────────────────────────────
+.idea/
+*.iml
+.vscode/
+*.swp
+
+# ── macOS ─────────────────────────────────────────────────────────────────────
+.DS_Store
+
+# ── Logs ──────────────────────────────────────────────────────────────────────
+*.log

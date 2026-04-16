@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoviePicker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- NAVIGATION — title + search only -->
+    <nav>
+        <h1 onclick="showSection('popular')" style="cursor:pointer;">MoodFlix</h1>
+        <div class="nav-links">
+            <img src="https://i.imgur.com/rESRfQX.png" alt="Search" onclick="showSection('search')" style="width:24px;height:24px;object-fit:contain;vertical-align:middle;cursor:pointer;" />
+        </div>
+    </nav>
+
+    <!-- SIDEBAR — slides in when hovering near right edge -->
+    <div id="sidebar-trigger">
+        <div id="sidebar">
+            <div class="sidebar-tab">
+                <svg class="tron-bike" width="64" height="36" viewBox="0 0 160 80" xmlns="http://www.w3.org/2000/svg">
+
+                    <!-- REAR WHEEL -->
+                    <circle cx="28" cy="56" r="20" fill="none" stroke="#00e5ff" stroke-width="2.5"/>
+                    <circle cx="28" cy="56" r="14" fill="none" stroke="#00e5ff" stroke-width="1.2" opacity="0.6"/>
+                    <circle cx="28" cy="56" r="8"  fill="none" stroke="#00e5ff" stroke-width="1"   opacity="0.4"/>
+                    <circle cx="28" cy="56" r="3"  fill="#00e5ff" opacity="0.8"/>
+
+                    <!-- FRONT WHEEL -->
+                    <circle cx="128" cy="56" r="20" fill="none" stroke="#00e5ff" stroke-width="2.5"/>
+                    <circle cx="128" cy="56" r="14" fill="none" stroke="#00e5ff" stroke-width="1.2" opacity="0.6"/>
+                    <circle cx="128" cy="56" r="8"  fill="none" stroke="#00e5ff" stroke-width="1"   opacity="0.4"/>
+                    <circle cx="128" cy="56" r="3"  fill="#00e5ff" opacity="0.8"/>
+
+                    <!-- MAIN BODY — low & sleek -->
+                    <path d="M28 54 L40 34 L78 26 L115 32 L128 44 L128 56 L28 56 Z"
+                          fill="rgba(0,229,255,0.07)" stroke="#00e5ff" stroke-width="2" stroke-linejoin="round"/>
+
+
+                    <path d="M62 32 L68 12 L88 12 L94 28 L78 30 Z"
+                          fill="rgba(0,229,255,0.14)" stroke="#00e5ff" stroke-width="1.8"/>
+
+
+                    <rect x="42" y="42" width="10" height="11" fill="none" stroke="#00e5ff" stroke-width="1.2" opacity="0.7"/>
+                    <line x1="47" y1="42" x2="47" y2="53" stroke="#00e5ff" stroke-width="0.8" opacity="0.5"/>
+                    <rect x="54" y="40" width="7"  height="13" fill="none" stroke="#00e5ff" stroke-width="1"   opacity="0.6"/>
+                    <rect x="63" y="39" width="5"  height="14" fill="none" stroke="#00e5ff" stroke-width="0.8" opacity="0.4"/>
+
+
+                    <line x1="28" y1="56" x2="128" y2="56" stroke="#00e5ff" stroke-width="1.5" opacity="0.3"/>
+
+
+                    <line x1="0" y1="56" x2="28" y2="56" stroke="#00e5ff" stroke-width="3" opacity="1"/>
+                    <line x1="0" y1="56" x2="14" y2="56" stroke="#ffffff" stroke-width="1.5" opacity="0.6"/>
+                </svg>
+            </div>
+            <div class="sidebar-content">
+                <div class="sidebar-header">
+                    <div class="sidebar-header-line"></div>
+                    <span class="sidebar-header-text">SYSTEM</span>
+                    <div class="sidebar-header-line"></div>
+                </div>
+
+                <button class="sidebar-btn" onclick="showSection('quiz')">
+                    <span class="sidebar-btn-icon">▶</span>
+                    <span class="sidebar-btn-label">Mood Quiz</span>
+                    <span class="sidebar-btn-sub">Find your match</span>
+                </button>
+
+                <div class="sidebar-divider"></div>
+
+                <button class="sidebar-btn" onclick="getRandomMovie()">
+                    <span class="sidebar-btn-icon">⟳</span>
+                    <span class="sidebar-btn-label">Random Movie</span>
+                    <span class="sidebar-btn-sub">Surprise me</span>
+                </button>
+
+                <div class="sidebar-footer">
+                    <div class="sidebar-footer-dot"></div>
+                    <div class="sidebar-footer-dot"></div>
+                    <div class="sidebar-footer-dot"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RANDOM MOVIE RESULT -->
+    <div id="random-result" class="hidden">
+        <div class="random-hero">
+            <h2 class="random-title">Your Random Movie</h2>
+            <p class="random-subtitle">Let fate decide what you watch tonight</p>
+        </div>
+
+        <div class="dice-area">
+            <div id="dice" onclick="rollDice()" title="Roll!">
+                <svg id="dice-svg" width="110" height="110" viewBox="0 0 100 100">
+                    <!-- rendered by JS -->
+                </svg>
+            </div>
+            <p class="dice-hint">CLICK TO ROLL</p>
+        </div>
+
+        <div id="random-movie-result" class="hidden">
+            <div id="random-movie-card" class="random-card-centered"></div>
+            <button class="roll-again-btn" onclick="rollDice()">⟳ &nbsp;ROLL AGAIN</button>
+        </div>
+    </div>
+
+    <!-- POPULAR MOVIES SECTION (default landing page) -->
+    <div id="section-popular" class="section">
+
+        <div class="popular-hero">
+            <div class="popular-hero-left">
+                <p class="popular-eyebrow">&#9632; LIVE FROM TMDB</p>
+                <h2 class="popular-title">Popular Right Now</h2>
+                <p class="popular-sub">100 movies per page — updated daily</p>
+            </div>
+            <div class="popular-hero-right">
+                <div class="popular-stat">
+                    <span class="stat-number">100</span>
+                    <span class="stat-label">Movies</span>
+                </div>
+                <div class="popular-stat-divider"></div>
+                <div class="popular-stat">
+                    <span class="stat-number" id="popular-page-display">01</span>
+                    <span class="stat-label">Page</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="popular-divider"></div>
+
+        <div class="pagination">
+            <button id="prev-btn" onclick="changePage(-1)" disabled class="page-btn">&#8592;</button>
+            <span id="page-indicator">Page 1</span>
+            <button id="next-btn" onclick="changePage(1)" class="page-btn">&#8594;</button>
+        </div>
+        <div id="popular-movies" class="movie-grid"></div>
+        <div class="pagination" style="margin-top: 24px;">
+            <button id="prev-btn-bottom" onclick="changePage(-1)" disabled class="page-btn">&#8592;</button>
+            <span id="page-indicator-bottom">Page 1</span>
+            <button id="next-btn-bottom" onclick="changePage(1)" class="page-btn">&#8594;</button>
+        </div>
+    </div>
+
+    <div id="section-search" class="section hidden">
+        <h2>Find a Movie</h2>
+
+        <div class="search-panel">
+            <div class="search-row">
+                <label>Search by Title</label>
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="e.g. Interstellar, The Dark Knight..." />
+                    <button onclick="searchByTitle()">Search</button>
+                </div>
+            </div>
+
+            <div class="search-divider">— or browse by filters —</div>
+            <div class="search-row filters-row">
+
+                <div class="filter-group">
+                    <label>Genre</label>
+                    <select id="genre-select">
+                        <option value="">Any Genre</option>
+                        <option value="28">Action</option>
+                        <option value="12">Adventure</option>
+                        <option value="16">Animation</option>
+                        <option value="35">Comedy</option>
+                        <option value="80">Crime</option>
+                        <option value="99">Documentary</option>
+                        <option value="18">Drama</option>
+                        <option value="10751">Family</option>
+                        <option value="14">Fantasy</option>
+                        <option value="36">History</option>
+                        <option value="27">Horror</option>
+                        <option value="10402">Music</option>
+                        <option value="9648">Mystery</option>
+                        <option value="10749">Romance</option>
+                        <option value="878">Science Fiction</option>
+                        <option value="53">Thriller</option>
+                        <option value="10752">War</option>
+                        <option value="37">Western</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Year From</label>
+                    <input type="number" id="filter-start-year" placeholder="e.g. 2000" min="1900" max="2026"/>
+                </div>
+
+                <div class="filter-group">
+                    <label>Year To</label>
+                    <input type="number" id="filter-end-year" placeholder="e.g. 2020" min="1900" max="2026"/>
+                </div>
+
+                <div class="filter-group">
+                    <label>Sort By</label>
+                    <select id="sort-select">
+                        <option value="popularity.desc">Most Popular</option>
+                        <option value="vote_average.desc">Highest Rated</option>
+                        <option value="primary_release_date.desc">Newest First</option>
+                        <option value="primary_release_date.asc">Oldest First</option>
+                    </select>
+                </div>
+
+                <div class="filter-group" style="justify-content: flex-end; align-self: flex-end;">
+                    <button class="browse-btn" onclick="browseByFilters()">Browse →</button>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="search-results" class="movie-grid"></div>
+    </div>
+
+    <!-- MOOD QUIZ -->
+    <div id="section-quiz" class="section hidden">
+
+        <div class="quiz-hero">
+            <div class="quiz-hero-left">
+                <p class="quiz-eyebrow">&#9632; MOOD DETECTION SYSTEM</p>
+                <h2 class="quiz-hero-title">What Should You Watch?</h2>
+                <p class="quiz-subtitle">Answer six questions to receive a curated selection of 15 movies tailored to your preferences.</p>
+            </div>
+            <div class="quiz-hero-right">
+                <div class="quiz-progress-wrap">
+                    <div class="quiz-progress-label">
+                        <span class="quiz-progress-text">PROGRESS</span>
+                        <span class="quiz-progress-count"><span id="quiz-answered">0</span> / 6</span>
+                    </div>
+                    <div class="quiz-progress-track">
+                        <div class="quiz-progress-bar" id="quiz-progress-bar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quiz-hero-divider"></div>
+
+        <div class="quiz">
+            <div class="quiz-question">
+                <p><span class="quiz-step">01</span><strong>How are you feeling right now?</strong></p>
+                <div class="quiz-options">
+                    <button class="quiz-btn" onclick="setAnswer('mood', 'happy', this)"> Happy</button>
+                    <button class="quiz-btn" onclick="setAnswer('mood', 'sad', this)"> Sad</button>
+                    <button class="quiz-btn" onclick="setAnswer('mood', 'excited', this)"> Excited</button>
+                    <button class="quiz-btn" onclick="setAnswer('mood', 'scared', this)"> Scared</button>
+                    <button class="quiz-btn" onclick="setAnswer('mood', 'romantic', this)"> Romantic</button>
+                    <button class="quiz-btn" onclick="setAnswer('mood', 'curious', this)"> Curious</button>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><span class="quiz-step">02</span><strong>What do you want to feel by the end?</strong></p>
+                <div class="quiz-options">
+                    <button class="quiz-btn" onclick="setAnswer('endFeel', 'inspired', this)"> Inspired</button>
+                    <button class="quiz-btn" onclick="setAnswer('endFeel', 'scared', this)"> Scared</button>
+                    <button class="quiz-btn" onclick="setAnswer('endFeel', 'laughing', this)"> Laughing</button>
+                    <button class="quiz-btn" onclick="setAnswer('endFeel', 'crying', this)"> Crying</button>
+                    <button class="quiz-btn" onclick="setAnswer('endFeel', 'mindblown', this)"> Mind Blown</button>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><span class="quiz-step">03</span><strong>Who are you watching with?</strong></p>
+                <div class="quiz-options">
+                    <button class="quiz-btn" onclick="setAnswer('social', 'alone', this)"> Alone</button>
+                    <button class="quiz-btn" onclick="setAnswer('social', 'friends', this)"> Friends</button>
+                    <button class="quiz-btn" onclick="setAnswer('social', 'partner', this)"> Partner</button>
+                    <button class="quiz-btn" onclick="setAnswer('social', 'family', this)"> Family</button>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><span class="quiz-step">04</span><strong>Do you want to think or just vibe?</strong></p>
+                <div class="quiz-options">
+                    <button class="quiz-btn" onclick="setAnswer('thinking', 'none', this)"> Don't make me think</button>
+                    <button class="quiz-btn" onclick="setAnswer('thinking', 'little', this)"> A little thinking</button>
+                    <button class="quiz-btn" onclick="setAnswer('thinking', 'deep', this)"> I want something deep</button>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><span class="quiz-step">05</span><strong>How long of a movie are you down for?</strong></p>
+                <div class="quiz-options">
+                    <button class="quiz-btn" onclick="setAnswer('commitment', 'short', this)"> Short (under 90 min)</button>
+                    <button class="quiz-btn" onclick="setAnswer('commitment', 'medium', this)"> Medium (90–120 min)</button>
+                    <button class="quiz-btn" onclick="setAnswer('commitment', 'long', this)"> Long (2+ hours)</button>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p><span class="quiz-step">06</span><strong>What sounds good right now?</strong></p>
+                <div class="quiz-options">
+                    <button class="quiz-btn" onclick="setAnswer('atmosphere', 'action', this)"> Loud action & explosions</button>
+                    <button class="quiz-btn" onclick="setAnswer('atmosphere', 'dialogue', this)"> Dialogue-heavy</button>
+                    <button class="quiz-btn" onclick="setAnswer('atmosphere', 'music', this)"> Music-driven</button>
+                    <button class="quiz-btn" onclick="setAnswer('atmosphere', 'quiet', this)"> Quiet & atmospheric</button>
+                </div>
+            </div>
+
+            <button class="submit-quiz" onclick="submitQuiz()">Find My Movies →</button>
+        </div>
+
+        <div id="quiz-results" class="movie-grid"></div>
+    </div>
+
+    <!-- MOVIE DETAIL MODAL -->
+    <div id="modal-overlay" class="modal-overlay hidden" onclick="closeModal()">
+        <div class="modal" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <!-- PAGE TRANSITION OVERLAYS -->
+    <!-- next: [trail][→bike] sweeps left to right -->
+    <div id="pt-next" class="pt-overlay">
+        <div class="pt-trail pt-trail-right"></div>
+        <svg class="pt-bike" width="80" height="50" viewBox="0 0 160 80">
+            <circle cx="28" cy="56" r="20" fill="none" stroke="#00e5ff" stroke-width="2.5"/>
+            <circle cx="28" cy="56" r="8"  fill="none" stroke="#00e5ff" stroke-width="1" opacity="0.5"/>
+            <circle cx="28" cy="56" r="3"  fill="#00e5ff" opacity="0.8"/>
+            <circle cx="128" cy="56" r="20" fill="none" stroke="#00e5ff" stroke-width="2.5"/>
+            <circle cx="128" cy="56" r="8"  fill="none" stroke="#00e5ff" stroke-width="1" opacity="0.5"/>
+            <circle cx="128" cy="56" r="3"  fill="#00e5ff" opacity="0.8"/>
+            <path d="M28 54 L40 34 L78 26 L115 32 L128 44 L128 56 L28 56 Z" fill="rgba(0,229,255,0.07)" stroke="#00e5ff" stroke-width="2"/>
+            <path d="M62 32 L68 12 L88 12 L94 28 L78 30 Z" fill="rgba(0,229,255,0.14)" stroke="#00e5ff" stroke-width="1.8"/>
+        </svg>
+    </div>
+    <!-- prev: [←bike][trail] sweeps right to left -->
+    <div id="pt-prev" class="pt-overlay">
+        <svg class="pt-bike" width="80" height="50" viewBox="0 0 160 80">
+            <g transform="scale(-1,1) translate(-160,0)">
+                <circle cx="28" cy="56" r="20" fill="none" stroke="#00e5ff" stroke-width="2.5"/>
+                <circle cx="28" cy="56" r="8"  fill="none" stroke="#00e5ff" stroke-width="1" opacity="0.5"/>
+                <circle cx="28" cy="56" r="3"  fill="#00e5ff" opacity="0.8"/>
+                <circle cx="128" cy="56" r="20" fill="none" stroke="#00e5ff" stroke-width="2.5"/>
+                <circle cx="128" cy="56" r="8"  fill="none" stroke="#00e5ff" stroke-width="1" opacity="0.5"/>
+                <circle cx="128" cy="56" r="3"  fill="#00e5ff" opacity="0.8"/>
+                <path d="M28 54 L40 34 L78 26 L115 32 L128 44 L128 56 L28 56 Z" fill="rgba(0,229,255,0.07)" stroke="#00e5ff" stroke-width="2"/>
+                <path d="M62 32 L68 12 L88 12 L94 28 L78 30 Z" fill="rgba(0,229,255,0.14)" stroke="#00e5ff" stroke-width="1.8"/>
+            </g>
+        </svg>
+        <div class="pt-trail pt-trail-left"></div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
