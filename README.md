@@ -28,7 +28,7 @@ A full-stack movie recommendation web app that suggests films based on your curr
 
 ## How It Works
 
-The Java backend acts as a secure middleware layer between the browser and TMDb. The API key never reaches the client — all requests flow through Spring Boot's `MovieController`, which delegates to `TMDbService` to build and execute the TMDb API calls. The frontend receives clean JSON and dynamically builds the UI.
+The Java backend acts as a secure middleware layer between the browser and TMDb. The API key never reaches the client, all requests flow through Spring Boot's `MovieController`, which delegates to `TMDbService` to build and execute the TMDb API calls. The frontend receives clean JSON and dynamically builds the UI.
 
 ### Quiz Algorithm
 
@@ -102,4 +102,4 @@ src/
 
 ---
 
-*Built as a Java final project — first full-stack project.*
+*Built as a Java final project, first full-stack project.*
