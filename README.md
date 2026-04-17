@@ -32,7 +32,7 @@ The Java backend acts as a secure middleware layer between the browser and TMDb.
 
 ### Quiz Algorithm
 
-The mood quiz uses a weighted genre-scoring system. Each of the 5 scored questions maps answers to TMDb genre IDs with point values. For example, picking "Excited" adds +3 to Action, +2 to Adventure, +2 to War, and +2 to Fantasy. All five answers stack their points together, and the top 2 scoring genres are sent to TMDb's discover endpoint using OR logic — so you get movies from either genre rather than requiring both.
+The mood quiz uses a weighted genre-scoring system. Each of the 5 scored questions maps answers to TMDb genre IDs with point values. For example, picking "Excited" adds +3 to Action, +2 to Adventure, +2 to War, and +2 to Fantasy. All five answers stack their points together, and the top 2 scoring genres are sent to TMDb's discover endpoint using OR logic,so you get movies from either genre rather than requiring both.
 
 ---
 
